@@ -21,14 +21,14 @@ while True:
     if driver.execute_script("return window.scrollY + window.innerHeight >= document.documentElement.scrollHeight"):
         break
 
-# Salvar o conteúdo da página após rolagem
+# Salva o conteúdo da página após rolagem
 site_content = driver.page_source
 driver.quit()
 
 # Pega o conteúdo do site e coloca na variável soup
 soup = BeautifulSoup(site_content, 'html.parser')
 
-# Lista que irá guardar as informações que selecionei da vaga
+# Lista que irá guardar as informações que foram selecionadas da vaga
 lista_vagas = {'cargo':[],'empresa':[],'local':[]}
 
 # Nomes de vagas para ampliar a busca
@@ -54,14 +54,14 @@ for nome_vaga in nome_vagas:
     # Procura a div que está com as descrições da vaga
     vagas = soup.find_all('div', class_=re.compile('HCzvP'))
 
-    # Loop em cada vaga e coleta as informações especificadas
+    # Faz um loop em cada vaga e coleta as informações especificadas
     for vaga in vagas:
         cargo = vaga.find('h2', class_=re.compile('XNNQK')).get_text().strip()
         empresa = vaga.find('p', class_=re.compile('cQyvth')).get_text().strip()
         local = vaga.find('span', class_=re.compile('cezNaf')).get_text().strip()
 
 
-        # Adiciona as informações encontrados à lista criada
+        # Adiciona as informações encontradas à lista criada
         lista_vagas['cargo'].append(cargo)
         lista_vagas['empresa'].append(empresa)
         lista_vagas['local'].append(local)
